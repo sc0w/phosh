@@ -393,6 +393,7 @@ wall_clock_notify_cb (PhoshLockscreen *self,
 
   date = local_date ();
   gtk_label_set_label (GTK_LABEL (priv->lbl_date), date);
+  return;
 }
 
 
