@@ -11,6 +11,7 @@ requires:
     - clang
     - clang-tools
     - cmake
+    - cppcheck
     - debhelper
     - git
     - gcr
@@ -91,13 +92,16 @@ build_scripts:
 #  - mkdir ../clang
 #  - cp -dpR . ../clang
 #  - cd ../clang
-  - scan-build $CHECKERS --keep-cc -o phosh_clang_htmlreport meson . _build
-  - scan-build $CHECKERS --keep-cc -o phosh_clang_htmlreport ninja -C _build
-  - tar -zcf phosh_clang_htmlreport.tar.gz phosh_clang_htmlreport
-  - curl -F file=@phosh_clang_htmlreport.tar.gz -F expires=6m -F no_index=true https://api.anonymousfiles.io/ && echo
+  - scan-build $CHECKERS --keep-cc -o html-report meson . _build
+  - scan-build $CHECKERS --keep-cc -o html-report ninja -C _build
+# - tar -zcf phosh_clang_htmlreport.tar.gz phosh_clang_htmlreport
+# - curl -F file=@phosh_clang_htmlreport.tar.gz -F expires=6m -F no_index=true https://api.anonymousfiles.io/ && echo
 #  - cd ../rootdir
 
 after_scripts:
+#  - cppcheck --xml --output-file=cppcheck.xml --enable=warning,style,performance,portability,information,missingInclude .
+#  - cppcheck-htmlreport --title=${REPO_NAME} --file=cppcheck.xml --report-dir=cppcheck-htmlreport
+  - ./gen-index -l 20
 #  - make check
 #  - make distcheck
 #  - make clean
