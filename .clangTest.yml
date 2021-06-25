@@ -92,6 +92,7 @@ build_scripts:
 #  - mkdir ../clang
 #  - cp -dpR . ../clang
 #  - cd ../clang
+  - cppcheck --enable=warning,style,performance,portability,information,missingInclude .
   - scan-build $CHECKERS --keep-cc -o html-report meson . _build
   - scan-build $CHECKERS --keep-cc -o html-report ninja -C _build
 # - tar -zcf phosh_clang_htmlreport.tar.gz phosh_clang_htmlreport
@@ -99,8 +100,8 @@ build_scripts:
 #  - cd ../rootdir
 
 after_scripts:
-#  - cppcheck --xml --output-file=cppcheck.xml --enable=warning,style,performance,portability,information,missingInclude .
-#  - cppcheck-htmlreport --title=${REPO_NAME} --file=cppcheck.xml --report-dir=cppcheck-htmlreport
+  - cppcheck --xml --output-file=cppcheck.xml --enable=warning,style,performance,portability,information,missingInclude .
+  - cppcheck-htmlreport --title=${REPO_NAME} --file=cppcheck.xml --report-dir=cppcheck-htmlreport
   - ./gen-index -l 20
 #  - make check
 #  - make distcheck
