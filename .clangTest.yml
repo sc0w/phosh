@@ -88,6 +88,11 @@ variables:
     -enable-checker alpha.unix.cstring.OutOfBounds
     -enable-checker alpha.core.FixedAddr"'
 
+before_scripts:
+  - mkdir html-report
+  - cppcheck --xml --output-file=cppcheck.xml --enable=warning,style,performance,portability,information,missingInclude .
+  - cppcheck-htmlreport --title=${REPO_NAME} --file=cppcheck.xml --report-dir=cppcheck-htmlreport
+
 build_scripts:
 #  - mkdir ../clang
 #  - cp -dpR . ../clang
@@ -100,8 +105,6 @@ build_scripts:
 #  - cd ../rootdir
 
 after_scripts:
-  - cppcheck --xml --output-file=cppcheck.xml --enable=warning,style,performance,portability,information,missingInclude .
-  - cppcheck-htmlreport --title=${REPO_NAME} --file=cppcheck.xml --report-dir=cppcheck-htmlreport
   - ./gen-index -l 20
 #  - make check
 #  - make distcheck
