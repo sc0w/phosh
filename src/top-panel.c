@@ -252,7 +252,6 @@ on_key_press_event (PhoshTopPanel *self, GdkEventKey *event, gpointer data)
   return handled;
 }
 
-
 static void
 released_cb (PhoshTopPanel *self)
 {
@@ -264,8 +263,6 @@ released_cb (PhoshTopPanel *self)
    */
   if (gtk_widget_is_visible (self->menu_power))
     gtk_popover_popdown (GTK_POPOVER (self->menu_power));
-  else
-    phosh_top_panel_fold (self);
 
 }
 
