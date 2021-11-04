@@ -53,6 +53,34 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
 
+                <child>
+                  <object class="GtkButton" id="btn_user">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="action-name">panel.lockscreen</property>
+                    <property name="margin-top">16</property>
+                    <property name="margin-start">16</property>
+                    <property name="width-request">40</property>
+                    <property name="height-request">40</property>
+                    <style>
+                      <class name="phosh-power-button"/>
+                      <class name="circular"/>
+                    </style>
+                    <child>
+                      <object class="GtkImage">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="icon_name">padlock-symbolic</property>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="fill">False</property>
+                    <property name="pack_type">start</property>
+                  </packing>
+                </child>
+
                 <child type="center">
 
                   <object class="GtkBox">
