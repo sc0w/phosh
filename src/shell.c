@@ -113,7 +113,7 @@ static guint signals[N_SIGNALS] = { 0 };
 typedef struct
 {
   PhoshDragSurface *panel;
-  PhoshLayerSurface *home;
+  PhoshDragSurface *home;
   GPtrArray *faders;              /* for final fade out */
 
   GtkWidget *notification_banner;
@@ -226,8 +226,9 @@ panels_create (PhoshShell *self)
                                                          monitor->wl_output));
   gtk_widget_show (GTK_WIDGET (priv->panel));
 
-  priv->home = PHOSH_LAYER_SURFACE(phosh_home_new (phosh_wayland_get_zwlr_layer_shell_v1(wl),
-                                                    monitor->wl_output));
+  priv->home = PHOSH_DRAG_SURFACE (phosh_home_new (phosh_wayland_get_zwlr_layer_shell_v1 (wl),
+                                                   phosh_wayland_get_zphoc_layer_shell_effects_v1 (wl),
+                                                   monitor->wl_output));
   gtk_widget_show (GTK_WIDGET (priv->home));
 
   g_signal_connect_swapped (

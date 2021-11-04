@@ -51,12 +51,12 @@ static GParamSpec *props[PROP_LAST_PROP];
 
 struct _PhoshHome
 {
-  PhoshLayerSurface parent;
+  PhoshDragSurface parent;
 
   GtkWidget *btn_home;
   GtkWidget *arrow_home;
   GtkWidget *btn_osk;
-  GtkWidget *rev_home;
+  //GtkWidget *rev_home;
   GtkWidget *overview;
 
   struct {
@@ -73,7 +73,7 @@ struct _PhoshHome
   /* osk button */
   gboolean        osk_enabled;
 };
-G_DEFINE_TYPE(PhoshHome, phosh_home, PHOSH_TYPE_LAYER_SURFACE);
+G_DEFINE_TYPE(PhoshHome, phosh_home, PHOSH_TYPE_DRAG_SURFACE);
 
 
 static void
@@ -135,29 +135,51 @@ phosh_home_get_property (GObject *object,
 }
 
 
-static void
-phosh_home_resize (PhoshHome *self)
+static int
+get_margin (gint height)
 {
-  int margin;
-  int height;
-  double progress = hdy_ease_out_cubic (self->animation.progress);
+  return (-1 * height) + PHOSH_HOME_BUTTON_HEIGHT;
+}
 
-  if (self->state == PHOSH_HOME_STATE_UNFOLDED)
-    progress = 1.0 - progress;
 
-  phosh_arrow_set_progress (PHOSH_ARROW (self->arrow_home), 1 - progress);
+static gboolean
+on_resize (PhoshHome *self)
+{
+  int margin, height;
+  int exclusive_zone;
+  PhoshDragSurfaceState drag_state;
 
   g_object_get (self, "configured-height", &height, NULL);
-  margin = (-height + PHOSH_HOME_BUTTON_HEIGHT) * progress;
+
+  /* FIXME: take current margin into account */
+  margin = get_margin (height);
+  g_debug ("%s: %d %d", __func__, height, get_margin (height));
 
   phosh_layer_surface_set_margins (PHOSH_LAYER_SURFACE (self), 0, 0, margin, 0);
-  /* Adjust the exclusive zone since exclusive zone includes margins.
-     We don't want to change the effective exclusive zone at all to
-     prevent all clients from being resized. */
-  phosh_layer_surface_set_exclusive_zone (PHOSH_LAYER_SURFACE (self),
-                                          -margin + PHOSH_HOME_BUTTON_HEIGHT);
+
+  drag_state = phosh_drag_surface_get_drag_state (PHOSH_DRAG_SURFACE (self));
+  switch (drag_state) {
+  case FOLDED:
+    exclusive_zone = height;
+    phosh_layer_surface_set_exclusive_zone (PHOSH_LAYER_SURFACE (self), exclusive_zone);
+    break;
+  case UNFOLDED:
+    exclusive_zone = PHOSH_HOME_BUTTON_HEIGHT;
+    phosh_layer_surface_set_exclusive_zone (PHOSH_LAYER_SURFACE (self), exclusive_zone);
+    break;
+  case DRAGGED:
+    /* Nothing to do, will be adjusted in the dragged handler */
+    break;
+  default:
+    g_assert_not_reached ();
+  }
 
   phosh_layer_surface_wl_surface_commit (PHOSH_LAYER_SURFACE (self));
+
+  phosh_drag_surface_set_margin (PHOSH_DRAG_SURFACE (self), margin, 0);
+  phosh_drag_surface_set_threshold (PHOSH_DRAG_SURFACE (self), 0.5);
+
+  return FALSE;
 }
 
 
@@ -193,13 +215,16 @@ fold_cb (PhoshHome *self, PhoshOverview *overview)
 static void
 on_has_activities_changed (PhoshHome *self)
 {
-  gboolean reveal;
+  //gboolean reveal;
 
   g_return_if_fail (PHOSH_IS_HOME (self));
 
+#if 0
+  /* TODO: Add back revealer for activities? */
   reveal = (phosh_overview_has_running_activities (PHOSH_OVERVIEW (self->overview)) ||
             self->state == PHOSH_HOME_STATE_FOLDED);
   gtk_revealer_set_reveal_child (GTK_REVEALER (self->rev_home), reveal);
+#endif
 }
 
 
@@ -313,15 +338,59 @@ on_keybindings_changed (PhoshHome *self,
 
 
 static void
+on_dragged (PhoshHome *self, int margin)
+{
+  int exclusive_zone;
+
+  exclusive_zone = -margin + PHOSH_HOME_BUTTON_HEIGHT;
+
+  phosh_layer_surface_set_exclusive_zone (PHOSH_LAYER_SURFACE (self), exclusive_zone);
+  phosh_layer_surface_wl_surface_commit (PHOSH_LAYER_SURFACE (self));
+}
+
+static void
+on_drag_state_changed (PhoshHome *self)
+{
+  PhoshHomeState state = PHOSH_HOME_STATE_FOLDED;
+  PhoshDragSurfaceState drag_state;
+  double arrow;
+
+  drag_state = phosh_drag_surface_get_drag_state (PHOSH_DRAG_SURFACE (self));
+  if (drag_state == DRAGGED)
+    return;
+
+  switch (drag_state) {
+  case UNFOLDED:
+    state = PHOSH_HOME_STATE_UNFOLDED;
+    arrow = 1.0;
+    break;
+  case FOLDED:
+    state = PHOSH_HOME_STATE_FOLDED;
+    arrow = 0.0;
+    break;
+  case DRAGGED:
+  default:
+    g_return_if_reached ();
+    return;
+  }
+
+  if (state == self->state)
+    return;
+
+  self->state = state;
+  phosh_home_update_osk_button (self);
+
+  /* TODO: add back animation and animate osk button too */
+  phosh_arrow_set_progress (PHOSH_ARROW (self->arrow_home), arrow);
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_HOME_STATE]);
+}
+
+
+static void
 phosh_home_constructed (GObject *object)
 {
   PhoshHome *self = PHOSH_HOME (object);
   g_autoptr (GSettings) settings = NULL;
-
-  g_signal_connect (self,
-                    "configured",
-                    G_CALLBACK (phosh_home_resize),
-                    NULL);
 
   g_object_connect (self->settings,
                     "swapped-signal::changed::" KEYBINDING_KEY_TOGGLE_OVERVIEW,
@@ -336,6 +405,9 @@ phosh_home_constructed (GObject *object)
   settings = g_settings_new ("org.gnome.desktop.a11y.applications");
   g_settings_bind (settings, "screen-keyboard-enabled",
                    self, "osk-enabled", G_SETTINGS_BIND_GET);
+
+  g_signal_connect (self, "notify::drag-state", G_CALLBACK (on_drag_state_changed), NULL);
+  g_signal_connect (self, "dragged", G_CALLBACK (on_dragged), NULL);
 
   G_OBJECT_CLASS (phosh_home_parent_class)->constructed (object);
 }
@@ -401,9 +473,9 @@ phosh_home_class_init (PhoshHomeClass *klass)
   gtk_widget_class_bind_template_child (widget_class, PhoshHome, btn_home);
   gtk_widget_class_bind_template_child (widget_class, PhoshHome, btn_osk);
   gtk_widget_class_bind_template_child (widget_class, PhoshHome, overview);
-  gtk_widget_class_bind_template_child (widget_class, PhoshHome, rev_home);
+  //gtk_widget_class_bind_template_child (widget_class, PhoshHome, rev_home);
   gtk_widget_class_bind_template_callback (widget_class, fold_cb);
-  gtk_widget_class_bind_template_callback (widget_class, home_clicked_cb);
+  //gtk_widget_class_bind_template_callback (widget_class, home_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_has_activities_changed);
   gtk_widget_class_bind_template_callback (widget_class, osk_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, window_key_press_event_cb);
@@ -416,19 +488,25 @@ static void
 phosh_home_init (PhoshHome *self)
 {
   self->state = PHOSH_HOME_STATE_FOLDED;
-  self->animation.progress = 1.0;
   self->settings = g_settings_new (KEYBINDINGS_SCHEMA_ID);
 
   gtk_widget_init_template (GTK_WIDGET (self));
+
+  phosh_home_update_osk_button (self);
+
+  /* Adjust margins and folded state on size changes */
+  g_signal_connect (self, "configure-event", G_CALLBACK (on_resize), NULL);
 }
 
 
 GtkWidget *
 phosh_home_new (struct zwlr_layer_shell_v1 *layer_shell,
+                struct zphoc_layer_shell_effects_v1 *layer_shell_effects,
                 struct wl_output *wl_output)
 {
   return g_object_new (PHOSH_TYPE_HOME,
                        "layer-shell", layer_shell,
+                       "layer-shell-effects", layer_shell_effects,
                        "wl-output", wl_output,
                        "anchor", ZWLR_LAYER_SURFACE_V1_ANCHOR_BOTTOM |
                                  ZWLR_LAYER_SURFACE_V1_ANCHOR_LEFT |
@@ -438,47 +516,6 @@ phosh_home_new (struct zwlr_layer_shell_v1 *layer_shell,
                        "exclusive-zone", PHOSH_HOME_BUTTON_HEIGHT,
                        "namespace", "phosh home",
                        NULL);
-}
-
-
-static gboolean
-animate_cb(GtkWidget *widget,
-           GdkFrameClock *frame_clock,
-           gpointer user_data)
-{
-  gint64 time;
-  gboolean finished = FALSE;
-  PhoshHome *self = PHOSH_HOME (widget);
-
-  time = gdk_frame_clock_get_frame_time (frame_clock) - self->animation.last_frame;
-  if (self->animation.last_frame < 0) {
-    time = 0;
-  }
-
-  self->animation.progress += 0.06666 * time / 16666.00;
-  self->animation.last_frame = gdk_frame_clock_get_frame_time (frame_clock);
-
-  if (self->animation.progress >= 1.0) {
-    finished = TRUE;
-    self->animation.progress = 1.0;
-  }
-
-  phosh_home_resize (self);
-
-  if (finished) {
-    if (self->state == PHOSH_HOME_STATE_FOLDED)
-      gtk_widget_hide (GTK_WIDGET (self->overview));
-    return G_SOURCE_REMOVE;
-  }
-
-  return G_SOURCE_CONTINUE;
-}
-
-
-static double
-reverse_ease_out_cubic (double t)
-{
-  return cbrt(t - 1) + 1;
 }
 
 
@@ -493,38 +530,27 @@ void
 phosh_home_set_state (PhoshHome *self, PhoshHomeState state)
 {
   g_autofree char *state_name = NULL;
-  gboolean enable_animations;
-  gboolean kbd_interactivity;
+  gboolean kbd_interactivity = FALSE;
+  PhoshDragSurfaceState target_state = FOLDED;
 
   g_return_if_fail (PHOSH_IS_HOME (self));
 
   if (self->state == state)
     return;
 
-  enable_animations = hdy_get_enable_animations (GTK_WIDGET (self));
-
-  self->state = state;
-
   state_name = g_enum_to_string (PHOSH_TYPE_HOME_STATE, state);
   g_debug ("Setting state to %s", state_name);
 
-  self->animation.last_frame = -1;
-  self->animation.progress = enable_animations ? reverse_ease_out_cubic (1.0 - hdy_ease_out_cubic (self->animation.progress)) : 1.0;
-  gtk_widget_add_tick_callback (GTK_WIDGET (self), animate_cb, NULL, NULL);
-
   if (state == PHOSH_HOME_STATE_UNFOLDED) {
-    kbd_interactivity = TRUE;
+    //kbd_interactivity = TRUE;
     phosh_overview_reset (PHOSH_OVERVIEW (self->overview));
-    gtk_widget_show (GTK_WIDGET (self->overview));
-  } else {
-    kbd_interactivity = FALSE;
+    target_state = UNFOLDED;
   }
-  phosh_home_update_osk_button (self);
-  phosh_layer_surface_set_kbd_interactivity (PHOSH_LAYER_SURFACE (self), kbd_interactivity);
 
+  phosh_layer_surface_set_kbd_interactivity (PHOSH_LAYER_SURFACE (self), kbd_interactivity);
   on_has_activities_changed (self);
 
-  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_HOME_STATE]);
+  phosh_drag_surface_set_drag_state (PHOSH_DRAG_SURFACE (self), target_state);
 }
 
 
