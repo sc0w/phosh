@@ -91,9 +91,9 @@ build_scripts:
 
   - scan-build $CHECKERS --html-title="$TITLESCANBUILD" --keep-cc -o html-report meson . _build 2>&1 | tee -a ./html-report/output_${TRAVIS_COMMIT}
   - scan-build $CHECKERS --html-title="$TITLESCANBUILD" --keep-cc -o html-report ninja -C _build 2>&1 | tee -a ./html-report/output_${TRAVIS_COMMIT}
+  - echo "Total time $(($SECONDS / 60)) minutes and $(($SECONDS % 60))" 2>&1 | tee -a ./html-report/output_${TRAVIS_COMMIT}
   - echo Errors detected in the build `cat ./html-report/output_${TRAVIS_COMMIT} | grep ' error:' | grep -v "\[" | wc -l` 2>&1 | tee -a ./html-report/output_${TRAVIS_COMMIT}
   - echo Warnings detected in the logs `cat ./html-report/output_${TRAVIS_COMMIT} | grep -i warning | wc -l` 2>&1 | tee -a ./html-report/output_${TRAVIS_COMMIT}
-  - echo "Total time $(($SECONDS / 60)) minutes and $(($SECONDS % 60))" 2>&1 | tee -a ./html-report/output_${TRAVIS_COMMIT}
 # - tar -zcf phosh_clang_htmlreport.tar.gz phosh_clang_htmlreport
 # - curl -F file=@phosh_clang_htmlreport.tar.gz -F expires=6m -F no_index=true https://api.anonymousfiles.io/ && echo
 #  - cd ../rootdir
