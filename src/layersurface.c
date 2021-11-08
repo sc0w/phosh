@@ -102,8 +102,8 @@ layer_surface_configure (void                         *data,
 
 
 static void
-layer_surface_closed (void                         *data,
-                      struct zwlr_layer_surface_v1 *surface)
+layer_surface_closed (void                               *data,
+                      const struct zwlr_layer_surface_v1 *surface)
 {
   PhoshLayerSurface *self = data;
   PhoshLayerSurfacePrivate *priv = phosh_layer_surface_get_instance_private (self);
