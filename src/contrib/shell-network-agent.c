@@ -65,7 +65,7 @@ static const SecretSchema network_agent_schema = {
         { SHELL_KEYRING_SN_TAG, SECRET_SCHEMA_ATTRIBUTE_STRING },
         { SHELL_KEYRING_SK_TAG, SECRET_SCHEMA_ATTRIBUTE_STRING },
         { NULL, 0 },
-    }, 0, NULL, NULL, NULL, NULL, NULL
+    }, 0, NULL, NULL, NULL, NULL, NULL, NULL
 };
 
 static void
