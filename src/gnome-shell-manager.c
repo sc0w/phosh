@@ -323,6 +323,7 @@ handle_grab_accelerators (PhoshGnomeShellDBusShell *skeleton,
                                              "%s",
                                              error->message);
       conflict = TRUE;
+      free_accelerator_info_from_hash_table (info);
       break;
     }
 
