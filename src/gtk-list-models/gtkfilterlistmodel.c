@@ -243,13 +243,14 @@ gtk_filter_list_model_add_items (GtkFilterListModel *self,
                                  guint               position,
                                  guint               n_items)
 {
-  FilterNode *node;
   guint i, n_visible;
 
   n_visible = 0;
   
   for (i = 0; i < n_items; i++)
     {
+      FilterNode *node;
+
       node = gtk_rb_tree_insert_before (self->items, after);
       node->visible = gtk_filter_list_model_run_filter (self, position + i);
       if (node->visible)

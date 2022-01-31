@@ -599,10 +599,10 @@ create_keyring_add_attr_list (NMConnection *connection,
                               const char   *setting_key,
                               char        **out_display_name)
 {
-  NMSettingConnection *s_con;
-
   if (connection)
     {
+      NMSettingConnection *s_con;
+
       s_con = (NMSettingConnection *) nm_connection_get_setting (connection, NM_TYPE_SETTING_CONNECTION);
       g_return_val_if_fail (s_con != NULL, NULL);
       connection_uuid = nm_setting_connection_get_uuid (s_con);
@@ -707,12 +707,13 @@ vpn_secret_iter_cb (const char *key,
                     gpointer    user_data)
 {
   KeyringRequest *r = user_data;
-  NMSetting *setting;
-  const char *service_name, *id;
-  char *display_name;
 
   if (secret && strlen (secret))
     {
+      NMSetting *setting;
+      const char *service_name, *id;
+      char *display_name;
+
       setting = nm_connection_get_setting (r->connection, NM_TYPE_SETTING_VPN);
       g_assert (setting);
       service_name = nm_setting_vpn_get_service_type (NM_SETTING_VPN (setting));
@@ -737,7 +738,6 @@ write_one_secret_to_keyring (NMSetting    *setting,
                              gpointer      user_data)
 {
   KeyringRequest *r = user_data;
-  const char *secret;
 
   /* Non-secrets obviously don't get saved in the keyring */
   if (!(flags & NM_SETTING_PARAM_SECRET))
@@ -752,6 +752,8 @@ write_one_secret_to_keyring (NMSetting    *setting,
     }
   else
     {
+      const char *secret;
+
       if (!G_VALUE_HOLDS_STRING (value))
         return;
 
