@@ -592,18 +592,13 @@ get_closest_scale_factor_for_resolution (float width, float height, float scale,
   float best_scale;
   int base_scaled_w;
   gboolean found_one;
-  int check_width;
-  int check_height;
 
   best_scale = 0;
 
   if (!is_valid_scale (width, height, scale))
     return 0.0;
 
-  check_width = fmodf (width, scale);
-  check_height = fmodf (height, scale);
-
-  if (check_width == 0 && check_height == 0)
+  if ((int)fmodf (width, scale) == 0 && (int)fmodf (height, scale) == 0)
     return scale;
 
   i = 0;
