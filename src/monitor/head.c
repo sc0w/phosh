@@ -598,7 +598,7 @@ get_closest_scale_factor_for_resolution (float width, float height, float scale,
   if (!is_valid_scale (width, height, scale))
     return 0.0;
 
-  if (roundf(fmodf (width, scale)) == 0 && roundf(fmodf (height, scale)) == 0)
+  if (fmodf (width, scale) < 1.f && fmodf (height, scale) < 1.f)
     return scale;
 
   i = 0;
