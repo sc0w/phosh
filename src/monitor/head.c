@@ -87,7 +87,10 @@ is_valid_scale (float width, float height, float scale)
   float scaled_h = height / scale;
   float scaled_w = width / scale;
 
-  if (scale < MINIMUM_SCALE_FACTOR || scale > MAXIMUM_SCALE_FACTOR)
+  if (width < 0.0 || width > G_MAXINT ||
+      height < 0.0 || height > G_MAXINT ||
+      scale < 0.0 || scale > G_MAXINT ||
+      scale < MINIMUM_SCALE_FACTOR || scale > MAXIMUM_SCALE_FACTOR)
     return FALSE;
 
   return is_logical_size_large_enough (floorf (scaled_w), floorf(scaled_h));
