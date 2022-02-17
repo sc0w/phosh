@@ -14,6 +14,7 @@ phosh_resources = gnome.compile_resources(
 
 phosh_enum_headers = files(
   'app-grid-button.h',
+  'drag-surface.h',
   'gnome-shell-manager.h',
   'home.h',
   'lockscreen.h',
@@ -78,6 +79,8 @@ libphosh_tool_sources = files(
   'clamp.h',
   'connectivity-info.c',
   'connectivity-info.h',
+  'drag-surface.c',
+  'drag-surface.h',
   'end-session-dialog.c',
   'end-session-dialog.h',
   'hks-info.c',
