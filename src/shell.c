@@ -1326,8 +1326,15 @@ phosh_shell_get_wwan (PhoshShell *self)
 }
 
 /**
+ * phosh_shell_get_usable_area:
+ * @self: The shell
+ * @x:(out)(nullable): The x coordinate where client usable area starts
+ * @y:(out)(nullable): The y coordinate where client usable area starts
+ * @width:(out)(nullable): The width of the client usable area
+ * @height:(out)(nullable): The height of the client usable area
+ *
  * Returns the usable area in pixels usable by a client on the phone
- * display
+ * display.
  */
 void
 phosh_shell_get_usable_area (PhoshShell *self, int *x, int *y, int *width, int *height)
