@@ -351,6 +351,9 @@ on_drag_state_changed (PhoshTopPanel *self)
 {
   gboolean visible = TRUE;
 
+  /* Close the popover on any drag */
+  gtk_widget_hide (self->menu_power);
+
   switch (phosh_drag_surface_get_drag_state (PHOSH_DRAG_SURFACE (self))) {
   case DRAGGED:
     visible = FALSE;
