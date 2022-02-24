@@ -506,17 +506,15 @@ get_margin (gint height)
 
 
 static gboolean
-on_resize (PhoshTopPanel *self)
+on_resize (PhoshTopPanel *self, GdkEventConfigure *event)
 {
-  int height, margin;
+  int margin;
 
-  gtk_window_get_size (GTK_WINDOW (self), NULL, &height);
-
-  margin = get_margin (height);
-  g_debug ("%s: %d %d", __func__, height, get_margin (height));
+  margin = get_margin (event->height);
+  g_debug ("%s: %d %d", __func__, event->height, margin);
 
   phosh_layer_surface_set_margins (PHOSH_LAYER_SURFACE (self), margin, 0, 0, 0);
-  phosh_layer_surface_set_exclusive_zone (PHOSH_LAYER_SURFACE (self), height);
+  phosh_layer_surface_set_exclusive_zone (PHOSH_LAYER_SURFACE (self), event->height);
   phosh_layer_surface_wl_surface_commit (PHOSH_LAYER_SURFACE (self));
 
   phosh_drag_surface_set_margin (PHOSH_DRAG_SURFACE (self), margin, 0);
