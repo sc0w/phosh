@@ -366,6 +366,7 @@ on_drag_state_changed (PhoshTopPanel *self)
     g_return_if_reached ();
   }
 
+  g_debug ("%s: state: %d, visible: %d", __func__, self->state, visible);
   gtk_widget_set_visible (self->box_top_panel, visible);
 }
 
@@ -508,14 +509,21 @@ get_margin (gint height)
 static gboolean
 on_resize (PhoshTopPanel *self, GdkEventConfigure *event)
 {
-  int margin;
+  guint margin;
 
   margin = get_margin (event->height);
-  g_debug ("%s: %d %d", __func__, event->height, margin);
+  g_debug ("%s: %dx%d margin: %d", __func__, event->height, event->width, margin);
 
-  phosh_layer_surface_set_margins (PHOSH_LAYER_SURFACE (self), margin, 0, 0, 0);
-  phosh_layer_surface_set_exclusive_zone (PHOSH_LAYER_SURFACE (self), event->height);
+  /* Don't touch margins when not folded, otherwise we fold the surface */
+  if (self->state == PHOSH_TOP_PANEL_STATE_FOLDED)
+    phosh_layer_surface_set_margins (PHOSH_LAYER_SURFACE (self), margin, 0, 0, 0);
+
+  /* We do this in on_dragged */
+  //phosh_layer_surface_set_exclusive_zone (PHOSH_LAYER_SURFACE (self), event->height);
   phosh_layer_surface_wl_surface_commit (PHOSH_LAYER_SURFACE (self));
+
+  /* TODO: cap GtkWindow's and the layer-surface's height at the screen height */
+  phosh_layer_surface_set_size (PHOSH_LAYER_SURFACE (self), -1, event->height);
 
   phosh_drag_surface_set_margin (PHOSH_DRAG_SURFACE (self), margin, 0);
   phosh_drag_surface_set_threshold (PHOSH_DRAG_SURFACE (self), 0.5);
@@ -525,13 +533,30 @@ on_resize (PhoshTopPanel *self, GdkEventConfigure *event)
 
 
 static void
+phosh_top_panel_configured (PhoshLayerSurface *layer_surface)
+{
+  guint width, height;
+
+  width = phosh_layer_surface_get_configured_width  (layer_surface);
+  height = phosh_layer_surface_get_configured_height (layer_surface);
+
+  g_debug ("%s: %dx%d", __func__, width, height);
+
+  PHOSH_LAYER_SURFACE_CLASS (phosh_top_panel_parent_class)->configured (layer_surface);
+}
+
+
+static void
 phosh_top_panel_class_init (PhoshTopPanelClass *klass)
 {
   GObjectClass *object_class = (GObjectClass *)klass;
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+  PhoshLayerSurfaceClass *layer_surface_class = PHOSH_LAYER_SURFACE_CLASS (klass);
 
   object_class->constructed = phosh_top_panel_constructed;
   object_class->dispose = phosh_top_panel_dispose;
+
+  layer_surface_class->configured = phosh_top_panel_configured;
 
   gtk_widget_class_set_css_name (widget_class, "phosh-top-panel");
 
