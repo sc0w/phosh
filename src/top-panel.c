@@ -521,8 +521,7 @@ on_resize (PhoshTopPanel *self, GdkEventConfigure *event)
   if (self->state == PHOSH_TOP_PANEL_STATE_FOLDED)
     phosh_layer_surface_set_margins (PHOSH_LAYER_SURFACE (self), margin, 0, 0, 0);
 
-  /* We do this in on_dragged */
-  //phosh_layer_surface_set_exclusive_zone (PHOSH_LAYER_SURFACE (self), event->height);
+  phosh_layer_surface_set_exclusive_zone (PHOSH_LAYER_SURFACE (self), event->height);
   phosh_layer_surface_wl_surface_commit (PHOSH_LAYER_SURFACE (self));
 
   /* TODO: cap GtkWindow's and the layer-surface's height at the screen height */
