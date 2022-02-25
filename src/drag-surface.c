@@ -21,6 +21,9 @@
  * A layer surface that can be dragged in ne direction via gestreus.
  */
 
+/* TODO: override properties of layersurface that shouldn't be set directly */
+/* (exclusive_zone, margins) */
+
 enum {
   PROP_0,
   PROP_LAYER_SHELL_EFFECTS,
@@ -351,5 +354,19 @@ phosh_drag_surface_set_drag_state (PhoshDragSurface     *self,
   priv = phosh_drag_surface_get_instance_private (self);
 
   zphoc_dragable_layer_surface_v1_set_state (priv->drag_surface, state);
+
+}
+
+
+void
+phosh_drag_surface_set_exclusive (PhoshDragSurface *self, guint exclusive)
+
+{
+  PhoshDragSurfacePrivate *priv;
+
+  g_return_if_fail (PHOSH_IS_DRAG_SURFACE (self));
+  priv = phosh_drag_surface_get_instance_private (self);
+
+  zphoc_dragable_layer_surface_v1_set_exclusive (priv->drag_surface, exclusive);
 
 }

@@ -38,5 +38,6 @@ void                  phosh_drag_surface_set_margin (PhoshDragSurface *self, int
 void                  phosh_drag_surface_set_threshold (PhoshDragSurface *self, double threshold);
 PhoshDragSurfaceState phosh_drag_surface_get_drag_state (PhoshDragSurface *self);
 void                  phosh_drag_surface_set_drag_state (PhoshDragSurface *self, PhoshDragSurfaceState state);
+void                  phosh_drag_surface_set_exclusive (PhoshDragSurface *self, guint exclusive);
 
 G_END_DECLS

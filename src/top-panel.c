@@ -337,12 +337,7 @@ on_keybindings_changed (PhoshTopPanel *self,
 static void
 on_dragged (PhoshTopPanel *self, int margin)
 {
-  int exclusive_zone;
-
-  exclusive_zone = -margin + PHOSH_TOP_PANEL_HEIGHT;
-
-  phosh_layer_surface_set_exclusive_zone (PHOSH_LAYER_SURFACE (self), exclusive_zone);
-  phosh_layer_surface_wl_surface_commit (PHOSH_LAYER_SURFACE (self));
+  g_debug ("Margin: %d", margin);
 }
 
 
@@ -513,22 +508,26 @@ static gboolean
 on_resize (PhoshTopPanel *self, GdkEventConfigure *event)
 {
   guint margin;
+  static gboolean inited = FALSE;
 
   margin = get_margin (event->height);
   g_debug ("%s: %dx%d margin: %d", __func__, event->height, event->width, margin);
 
-  /* Don't touch margins when not folded, otherwise we fold the surface */
-  if (self->state == PHOSH_TOP_PANEL_STATE_FOLDED)
-    phosh_layer_surface_set_margins (PHOSH_LAYER_SURFACE (self), margin, 0, 0, 0);
-
-  phosh_layer_surface_set_exclusive_zone (PHOSH_LAYER_SURFACE (self), event->height);
-  phosh_layer_surface_wl_surface_commit (PHOSH_LAYER_SURFACE (self));
-
   /* TODO: cap GtkWindow's and the layer-surface's height at the screen height */
   phosh_layer_surface_set_size (PHOSH_LAYER_SURFACE (self), -1, event->height);
+  phosh_layer_surface_wl_surface_commit (PHOSH_LAYER_SURFACE (self));
 
+  /* If the size changes we need to update the folded margin */
   phosh_drag_surface_set_margin (PHOSH_DRAG_SURFACE (self), margin, 0);
-  phosh_drag_surface_set_threshold (PHOSH_DRAG_SURFACE (self), 0.5);
+
+  if (inited == FALSE) {
+    /* TODO: Ideally we'd only do that on maped or realize */
+    phosh_drag_surface_set_exclusive (PHOSH_DRAG_SURFACE (self), PHOSH_TOP_PANEL_HEIGHT);
+    phosh_drag_surface_set_threshold (PHOSH_DRAG_SURFACE (self), 0.5);
+    /* Add enum for ZPHOC_DRAGABLE_LAYER_SURFACE_V1_DRAG_END_STATE_FOLDED */
+    phosh_drag_surface_set_drag_state (PHOSH_DRAG_SURFACE (self), 0);
+    inited = TRUE;
+  }
 
   return FALSE;
 }
@@ -611,7 +610,6 @@ phosh_top_panel_new (struct zwlr_layer_shell_v1          *layer_shell,
                                  ZWLR_LAYER_SURFACE_V1_ANCHOR_RIGHT,
                        "layer", ZWLR_LAYER_SHELL_V1_LAYER_TOP,
                        "kbd-interactivity", FALSE,
-                       "exclusive-zone", PHOSH_TOP_PANEL_HEIGHT,
                        "namespace", "phosh top-panel",
                        NULL);
 }

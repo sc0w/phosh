@@ -94,6 +94,14 @@
       <arg name="threshold" type="fixed"/>
     </request>
 
+    <request name="set_exclusive">
+      <description summary="Set the margins">
+        Sets the exclusive zone. This is the amount of pixels form the screen
+        edge that shouldn't be occluded by other surfaces.
+      </description>
+      <arg name="exclusive" type="uint"/>
+    </request>
+
     <request name="set_state">
       <description summary="Set a certain state">
         Set state to folded or unfolded.
