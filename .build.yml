@@ -31,6 +31,7 @@ requires:
     - libpulse-mainloop-glib0
     - libpulse0
     - gir1.2-polkit-1.0
+    - gtk-doc-tools
     - libpolkit-agent-1-0
     - libpolkit-agent-1-dev
     - libpolkit-gobject-1-0
