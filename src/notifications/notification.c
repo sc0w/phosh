@@ -719,7 +719,7 @@ phosh_notification_set_actions (PhoshNotification *self,
 }
 
 
-const GStrv
+GStrv
 phosh_notification_get_actions (PhoshNotification *self)
 {
   PhoshNotificationPrivate *priv;
