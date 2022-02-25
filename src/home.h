@@ -29,6 +29,7 @@ typedef enum {
 G_DECLARE_FINAL_TYPE (PhoshHome, phosh_home, PHOSH, HOME, PhoshLayerSurface)
 
 GtkWidget * phosh_home_new (struct zwlr_layer_shell_v1 *layer_shell,
-                            struct wl_output *wl_output);
+                            struct wl_output *wl_output,
+                            int height);
 void phosh_home_set_state (PhoshHome *self, PhoshHomeState state);
 PhoshOverview *phosh_home_get_overview (PhoshHome *self);

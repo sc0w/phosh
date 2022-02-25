@@ -424,11 +424,11 @@ phosh_home_init (PhoshHome *self)
 
 
 GtkWidget *
-phosh_home_new (struct zwlr_layer_shell_v1 *layer_shell,
-                struct wl_output *wl_output)
+phosh_home_new (struct zwlr_layer_shell_v1 *layer_shell, struct wl_output *wl_output, int height)
 {
   return g_object_new (PHOSH_TYPE_HOME,
                        "layer-shell", layer_shell,
+                       "height", height,
                        "wl-output", wl_output,
                        "anchor", ZWLR_LAYER_SURFACE_V1_ANCHOR_BOTTOM |
                                  ZWLR_LAYER_SURFACE_V1_ANCHOR_LEFT |
