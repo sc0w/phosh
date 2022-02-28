@@ -511,6 +511,11 @@ on_resize (PhoshTopPanel *self, GdkEventConfigure *event)
   static gboolean inited = FALSE;
 
   margin = get_margin (event->height);
+
+  /* ignore popovers like the power menu */
+  if (gtk_widget_get_window (GTK_WIDGET (self)) != event->window)
+    return FALSE;
+
   g_debug ("%s: %dx%d margin: %d", __func__, event->height, event->width, margin);
 
   /* TODO: cap GtkWindow's and the layer-surface's height at the screen height */
