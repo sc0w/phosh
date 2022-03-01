@@ -656,13 +656,11 @@ phosh_top_panel_toggle_fold (PhoshTopPanel *self)
 {
   g_return_if_fail (PHOSH_IS_TOP_PANEL (self));
 
-#if 0
   if (self->state == PHOSH_TOP_PANEL_STATE_UNFOLDED) {
     phosh_top_panel_fold (self);
   } else {
     phosh_top_panel_unfold (self);
   }
-#endif
 }
 
 
