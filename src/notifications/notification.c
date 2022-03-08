@@ -719,6 +719,12 @@ phosh_notification_set_actions (PhoshNotification *self,
 }
 
 
+/**
+ * phosh_notification_get_actions:
+ * @self: The #PhoshNotification
+ *
+ * Returns: (transfer none): a #GStrv
+ */
 GStrv
 phosh_notification_get_actions (PhoshNotification *self)
 {
