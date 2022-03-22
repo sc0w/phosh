@@ -14,7 +14,7 @@ expand_content_md_files = [
   'patterns.md',
 ]
 
-glib_prefix = glib_dep.get_pkgconfig_variable('prefix')
+glib_prefix = glib_dep.get_variable(pkgconfig: 'prefix')
 glib_docpath = join_paths(glib_prefix, 'share', 'gtk-doc', 'html')
 docpath = join_paths(get_option('datadir'), 'gtk-doc', 'html')
 
@@ -33,8 +33,8 @@ gnome.gtkdoc('phosh',
            main_xml: 'phosh-docs.xml',
       content_files: content_files + expand_md_files,
             src_dir: [
-                       join_paths(meson.source_root(), 'src'),
-                       join_paths(meson.build_root(), 'src'),
+                       join_paths(meson.global_source_root(), 'src'),
+                       join_paths(meson.global_build_root(), 'src'),
                      ],
        dependencies: phosh_doc_dep,
   gobject_typesfile: 'phosh.types',
