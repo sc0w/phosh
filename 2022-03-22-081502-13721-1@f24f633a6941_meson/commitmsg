@@ -1,0 +1,5 @@
+meson Avoid deprecated features:
+
+Fixes the warning:
+NOTICE: Future-deprecated features used:
+ * 0.56.0: {'meson.build_root', 'Dependency.get_pkgconfig_variable', 'meson.source_root'}

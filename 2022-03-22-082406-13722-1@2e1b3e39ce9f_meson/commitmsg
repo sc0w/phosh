@@ -1,0 +1,5 @@
+meson: Require 0.58.0
+
+Fixes the warning:
+WARNING: Project specifies a minimum meson_version '>= 0.54.0' but uses features which were added in newer versions:
+ * 0.58.0: {'meson.global_source_root', 'meson.global_build_root'}

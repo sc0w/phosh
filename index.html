@@ -1,0 +1,165 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <title>phosh Code Analyzer results</title>
+</head>
+<body>
+<h1>
+  <a href="https://github.com/sc0w">sc0w</a>/<a href="https://github.com/sc0w/phosh">phosh</a> Static analyzer results
+</h1>
+  <a href="https://github.com/sc0w/phosh" title="Github"><i class="fa fa-github fa-2x"></i>GitHub</a>
+  <a href="" title="Travis CI"><img src="https://travis-ci.org/sc0w/phosh.svg?branch=master" alt="Build Status" /></a>
+<hr/>
+Commit: <a href="https://github.com/sc0w/phosh/commit/bf65fefa0589b42d878aae9c45065e88880e6c04">bf65fefa0589b42d878aae9c45065e88880e6c04</a><br/>
+Compare: <a href="https://github.com/sc0w/phosh/compare/"></a><br/>
+Branch: <a href="https://github.com/sc0w/phosh/tree/appauthprompt_redundant">appauthprompt_redundant</a><br/>
+Time: 2022-06-15 13:14:30+00:00<br/>
+Messages:<br/>
+<pre>
+app-auth-prompt: Drop unused code
+
+add_choice_to_gvariant looks at the switch state not at data
+we store on the GObject so this code can go.
+</pre>
+<a href="https://sc0w.github.io/phosh/output_bf65fefa0589b42d878aae9c45065e88880e6c04">Logs</a><br/>
+<br/>
+Warnings: 1093<br/>
+<hr/>
+<ul>
+<li><a href="2022-06-15-131430-8312-cppcheck@bf65fefa0589_appauthprompt_redundant">2022-06-15-131430-8312-cppcheck@bf65fefa0589_appauthprompt_redundant</a></li>
+<li><a href="2022-06-15-124101-13619-1@bf65fefa0589_appauthprompt_redundant">2022-06-15-124101-13619-1@bf65fefa0589_appauthprompt_redundant</a></li>
+<li><a href=2022-05-25-083356-1253-cppcheck@d2235ffaec07_appauthprompt_redundant title="app-auth-prompt: avoid redundant condition">2022-05-25-083356-1253-cppcheck@d2235ffaec07_appauthprompt_redundant</a> <a href="2022-05-25-083356-1253-cppcheck@d2235ffaec07_appauthprompt_redundant/output_d2235ffaec075c161aec9441ec5c0c91123723ca">logs</a> 1093</li>
+<li><a href=2022-05-25-080430-13741-1@d2235ffaec07_appauthprompt_redundant title="app-auth-prompt: avoid redundant condition">2022-05-25-080430-13741-1@d2235ffaec07_appauthprompt_redundant</a> <a href="2022-05-25-080430-13741-1@d2235ffaec07_appauthprompt_redundant/output_d2235ffaec075c161aec9441ec5c0c91123723ca">logs</a> 1093</li>
+<li><a href=2022-05-25-074406-9301-cppcheck@afff84424d0e_old_testci title="update ci
+
+ci test
+
+test
+
+test
+
+newtest
+
+ci: enable gtk-doc
+
+ci: add gtk-doc-tools">2022-05-25-074406-9301-cppcheck@afff84424d0e_old_testci</a> <a href="2022-05-25-074406-9301-cppcheck@afff84424d0e_old_testci/output_afff84424d0e1fe21ad083c34e5516fda71a54f4">logs</a> 1088</li>
+<li><a href=2022-05-25-073423-3264-cppcheck@28cd6fcf96db_testci title="update ci
+
+ci test
+
+test
+
+test
+
+newtest
+
+ci: enable gtk-doc
+
+ci: add gtk-doc-tools">2022-05-25-073423-3264-cppcheck@28cd6fcf96db_testci</a> <a href="2022-05-25-073423-3264-cppcheck@28cd6fcf96db_testci/output_28cd6fcf96dbc5f398df416a50e77e4547ce3df1">logs</a> 1095</li>
+<li><a href=2022-05-25-070149-13745-1@afff84424d0e_old_testci title="update ci
+
+ci test
+
+test
+
+test
+
+newtest
+
+ci: enable gtk-doc
+
+ci: add gtk-doc-tools">2022-05-25-070149-13745-1@afff84424d0e_old_testci</a> <a href="2022-05-25-070149-13745-1@afff84424d0e_old_testci/output_afff84424d0e1fe21ad083c34e5516fda71a54f4">logs</a> 1088</li>
+<li><a href=2022-05-25-070143-13743-1@28cd6fcf96db_testci title="update ci
+
+ci test
+
+test
+
+test
+
+newtest
+
+ci: enable gtk-doc
+
+ci: add gtk-doc-tools">2022-05-25-070143-13743-1@28cd6fcf96db_testci</a> <a href="2022-05-25-070143-13743-1@28cd6fcf96db_testci/output_28cd6fcf96dbc5f398df416a50e77e4547ce3df1">logs</a> 1095</li>
+<li><a href=2022-03-22-090144-5681-cppcheck@2e1b3e39ce9f_meson title="meson: Require 0.58.0
+
+Fixes the warning:
+WARNING: Project specifies a minimum meson_version '>= 0.54.0' but uses features which were added in newer versions:
+ * 0.58.0: {'meson.global_source_root', 'meson.global_build_root'}">2022-03-22-090144-5681-cppcheck@2e1b3e39ce9f_meson</a> <a href="2022-03-22-090144-5681-cppcheck@2e1b3e39ce9f_meson/output_2e1b3e39ce9ff05519fdb3cd2447bf7a2bca8924">logs</a> 1045</li>
+<li><a href=2022-03-22-084700-8419-cppcheck@f24f633a6941_meson title="meson Avoid deprecated features:
+
+Fixes the warning:
+NOTICE: Future-deprecated features used:
+ * 0.56.0: {'meson.build_root', 'Dependency.get_pkgconfig_variable', 'meson.source_root'}">2022-03-22-084700-8419-cppcheck@f24f633a6941_meson</a> <a href="2022-03-22-084700-8419-cppcheck@f24f633a6941_meson/output_f24f633a6941c119c0a87c71ad512dc870081f68">logs</a> 1053</li>
+<li><a href=2022-03-22-082406-13722-1@2e1b3e39ce9f_meson title="meson: Require 0.58.0
+
+Fixes the warning:
+WARNING: Project specifies a minimum meson_version '>= 0.54.0' but uses features which were added in newer versions:
+ * 0.58.0: {'meson.global_source_root', 'meson.global_build_root'}">2022-03-22-082406-13722-1@2e1b3e39ce9f_meson</a> <a href="2022-03-22-082406-13722-1@2e1b3e39ce9f_meson/output_2e1b3e39ce9ff05519fdb3cd2447bf7a2bca8924">logs</a> 1045</li>
+<li><a href=2022-03-22-081502-13721-1@f24f633a6941_meson title="meson Avoid deprecated features:
+
+Fixes the warning:
+NOTICE: Future-deprecated features used:
+ * 0.56.0: {'meson.build_root', 'Dependency.get_pkgconfig_variable', 'meson.source_root'}">2022-03-22-081502-13721-1@f24f633a6941_meson</a> <a href="2022-03-22-081502-13721-1@f24f633a6941_meson/output_f24f633a6941c119c0a87c71ad512dc870081f68">logs</a> 1053</li>
+<li><a href=2022-03-21-134516-4501-cppcheck@afff84424d0e_testci title="update ci
+
+ci test
+
+test
+
+test
+
+newtest
+
+ci: enable gtk-doc
+
+ci: add gtk-doc-tools">2022-03-21-134516-4501-cppcheck@afff84424d0e_testci</a> <a href="2022-03-21-134516-4501-cppcheck@afff84424d0e_testci/output_afff84424d0e1fe21ad083c34e5516fda71a54f4">logs</a> 1045</li>
+<li><a href=2022-03-21-134242-3099-cppcheck@434cbec723d4_old_testci title="update ci
+
+ci test
+
+test
+
+test
+
+newtest
+
+ci: enable gtk-doc
+
+ci: add gtk-doc-tools">2022-03-21-134242-3099-cppcheck@434cbec723d4_old_testci</a> <a href="2022-03-21-134242-3099-cppcheck@434cbec723d4_old_testci/output_434cbec723d46368ce602254b700a9c8f5a2c59d">logs</a> 1118</li>
+<li><a href=2022-03-21-130547-13717-1@afff84424d0e_testci title="update ci
+
+ci test
+
+test
+
+test
+
+newtest
+
+ci: enable gtk-doc
+
+ci: add gtk-doc-tools">2022-03-21-130547-13717-1@afff84424d0e_testci</a> <a href="2022-03-21-130547-13717-1@afff84424d0e_testci/output_afff84424d0e1fe21ad083c34e5516fda71a54f4">logs</a> 1045</li>
+<li><a href=2022-03-21-130503-13720-1@434cbec723d4_old_testci title="update ci
+
+ci test
+
+test
+
+test
+
+newtest
+
+ci: enable gtk-doc
+
+ci: add gtk-doc-tools">2022-03-21-130503-13720-1@434cbec723d4_old_testci</a> <a href="2022-03-21-130503-13720-1@434cbec723d4_old_testci/output_434cbec723d46368ce602254b700a9c8f5a2c59d">logs</a> 1118</li>
+<li><a href=2022-03-21-113049-3169-cppcheck@67a00e41d000_gvc-channel-bar_badcast title="test new">2022-03-21-113049-3169-cppcheck@67a00e41d000_gvc-channel-bar_badcast</a> <a href="2022-03-21-113049-3169-cppcheck@67a00e41d000_gvc-channel-bar_badcast/output_67a00e41d0003a0f43bf877f56d4da92585344ef">logs</a> 1117</li>
+<li><a href=2022-03-21-105329-13721-1@67a00e41d000_gvc-channel-bar_badcast title="test new">2022-03-21-105329-13721-1@67a00e41d000_gvc-channel-bar_badcast</a> <a href="2022-03-21-105329-13721-1@67a00e41d000_gvc-channel-bar_badcast/output_67a00e41d0003a0f43bf877f56d4da92585344ef">logs</a> 1117</li>
+<li><a href=2022-03-21-094444-0972-cppcheck@1e374b142cd1_gvc-channel-bar_badcast title="fix parenthesis">2022-03-21-094444-0972-cppcheck@1e374b142cd1_gvc-channel-bar_badcast</a> <a href="2022-03-21-094444-0972-cppcheck@1e374b142cd1_gvc-channel-bar_badcast/output_1e374b142cd1d7ba6e8bb0b1620123ab76bdf749">logs</a> 1118</li>
+<li><a href=2022-03-21-090513-13721-1@1e374b142cd1_gvc-channel-bar_badcast title="fix parenthesis">2022-03-21-090513-13721-1@1e374b142cd1_gvc-channel-bar_badcast</a> <a href="2022-03-21-090513-13721-1@1e374b142cd1_gvc-channel-bar_badcast/output_1e374b142cd1d7ba6e8bb0b1620123ab76bdf749">logs</a> 1118</li>
+</ul>
+99M
+</body>
+</html>

@@ -1,0 +1,240 @@
+<html>
+<head>
+<title>phosh (clang-tools 1:13.0-54) - scan-build results</title>
+<link type="text/css" rel="stylesheet" href="scanview.css"/>
+<script src="sorttable.js"></script>
+<script language='javascript' type="text/javascript">
+function SetDisplay(RowClass, DisplayVal)
+{
+  var Rows = document.getElementsByTagName("tr");
+  for ( var i = 0 ; i < Rows.length; ++i ) {
+    if (Rows[i].className == RowClass) {
+      Rows[i].style.display = DisplayVal;
+    }
+  }
+}
+
+function CopyCheckedStateToCheckButtons(SummaryCheckButton) {
+  var Inputs = document.getElementsByTagName("input");
+  for ( var i = 0 ; i < Inputs.length; ++i ) {
+    if (Inputs[i].type == "checkbox") {
+      if(Inputs[i] != SummaryCheckButton) {
+        Inputs[i].checked = SummaryCheckButton.checked;
+        Inputs[i].onclick();
+      }
+    }
+  }
+}
+
+function returnObjById( id ) {
+    if (document.getElementById)
+        var returnVar = document.getElementById(id);
+    else if (document.all)
+        var returnVar = document.all[id];
+    else if (document.layers)
+        var returnVar = document.layers[id];
+    return returnVar;
+}
+
+var NumUnchecked = 0;
+
+function ToggleDisplay(CheckButton, ClassName) {
+  if (CheckButton.checked) {
+    SetDisplay(ClassName, "");
+    if (--NumUnchecked == 0) {
+      returnObjById("AllBugsCheck").checked = true;
+    }
+  }
+  else {
+    SetDisplay(ClassName, "none");
+    NumUnchecked++;
+    returnObjById("AllBugsCheck").checked = false;
+  }
+}
+</script>
+<!-- SUMMARYENDHEAD -->
+</head>
+<body>
+<h1>phosh (clang-tools 1:13.0-54) - scan-build results</h1>
+
+<table>
+<tr><th>User:</th><td>root@144e88d90aad</td></tr>
+<tr><th>Working Directory:</th><td>/rootdir</td></tr>
+<tr><th>Command Line:</th><td>ninja -C _build</td></tr>
+<tr><th>Clang Version:</th><td>Debian clang version 13.0.1-4
+</td></tr>
+<tr><th>Date:</th><td>Wed May 25 08:04:30 2022</td></tr>
+</table>
+<h2>Bug Summary</h2><table>
+<thead><tr><td>Bug Type</td><td>Quantity</td><td class="sorttable_nosort">Display?</td></tr></thead>
+<tr style="font-weight:bold"><td class="SUMM_DESC">All Bugs</td><td class="Q">47</td><td><center><input type="checkbox" id="AllBugsCheck" onClick="CopyCheckedStateToCheckButtons(this);" checked/></center></td></tr>
+<tr><th>Logic error</th><th colspan=2></th></tr>
+<tr><td class="SUMM_DESC">Buffer overflow</td><td class="Q">1</td><td><center><input type="checkbox" onClick="ToggleDisplay(this,'bt_logic_error_buffer_overflow');" checked/></center></td></tr>
+<tr><td class="SUMM_DESC">Cast from non-struct type to struct type</td><td class="Q">27</td><td><center><input type="checkbox" onClick="ToggleDisplay(this,'bt_logic_error_cast_from_non-struct_type_to_struct_type');" checked/></center></td></tr>
+<tr><td class="SUMM_DESC">Dereference of null pointer</td><td class="Q">7</td><td><center><input type="checkbox" onClick="ToggleDisplay(this,'bt_logic_error_dereference_of_null_pointer');" checked/></center></td></tr>
+<tr><td class="SUMM_DESC">Out-of-bound access</td><td class="Q">1</td><td><center><input type="checkbox" onClick="ToggleDisplay(this,'bt_logic_error_out-of-bound_access');" checked/></center></td></tr>
+<tr><th>Memory error</th><th colspan=2></th></tr>
+<tr><td class="SUMM_DESC">Memory leak</td><td class="Q">2</td><td><center><input type="checkbox" onClick="ToggleDisplay(this,'bt_memory_error_memory_leak');" checked/></center></td></tr>
+<tr><th>Unused code</th><th colspan=2></th></tr>
+<tr><td class="SUMM_DESC">Dead assignment</td><td class="Q">5</td><td><center><input type="checkbox" onClick="ToggleDisplay(this,'bt_unused_code_dead_assignment');" checked/></center></td></tr>
+<tr><td class="SUMM_DESC">Unreachable code</td><td class="Q">4</td><td><center><input type="checkbox" onClick="ToggleDisplay(this,'bt_unused_code_unreachable_code');" checked/></center></td></tr>
+</table>
+<h2>Reports</h2>
+
+<table class="sortable" style="table-layout:automatic">
+<thead><tr>
+  <td>Bug Group</td>
+  <td class="sorttable_sorted">Bug Type<span id="sorttable_sortfwdind">&nbsp;&#x25BE;</span></td>
+  <td>File</td>
+  <td>Function/Method</td>
+  <td class="Q">Line</td>
+  <td class="Q">Path Length</td>
+  <td class="sorttable_nosort"></td>
+  <!-- REPORTBUGCOL -->
+</tr></thead>
+<tbody>
+<tr class="bt_logic_error_buffer_overflow"><td class="DESC">Logic error</td><td class="DESC">Buffer overflow</td><td>src/gtk-list-models/gtkrbtree.c</td><td class="DESC">parent</td><td class="Q">78</td><td class="Q">12</td><td><a href="report-a91107.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-a91107.html" -->
+</tr>
+<tr class="bt_logic_error_cast_from_non-struct_type_to_struct_type"><td class="DESC">Logic error</td><td class="DESC">Cast from non-struct type to struct type</td><td>src/gtk-list-models/gtkrbtree.c</td><td class="DESC">gtk_rb_tree_node_get_next</td><td class="Q">572</td><td class="Q">1</td><td><a href="report-0538d7.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-0538d7.html" -->
+</tr>
+<tr class="bt_logic_error_cast_from_non-struct_type_to_struct_type"><td class="DESC">Logic error</td><td class="DESC">Cast from non-struct type to struct type</td><td>src/gtk-list-models/gtkrbtree.c</td><td class="DESC">gtk_rb_tree_node_get_right</td><td class="Q">596</td><td class="Q">1</td><td><a href="report-0fa2aa.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-0fa2aa.html" -->
+</tr>
+<tr class="bt_logic_error_cast_from_non-struct_type_to_struct_type"><td class="DESC">Logic error</td><td class="DESC">Cast from non-struct type to struct type</td><td>src/gtk-list-models/gtkrbtree.c</td><td class="DESC">gtk_rb_tree_insert_before</td><td class="Q">646</td><td class="Q">1</td><td><a href="report-13cb56.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-13cb56.html" -->
+</tr>
+<tr class="bt_logic_error_cast_from_non-struct_type_to_struct_type"><td class="DESC">Logic error</td><td class="DESC">Cast from non-struct type to struct type</td><td>src/portal-access-manager.c</td><td class="DESC">handle_access_dialog</td><td class="Q">110</td><td class="Q">1</td><td><a href="report-13cc16.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-13cc16.html" -->
+</tr>
+<tr class="bt_logic_error_cast_from_non-struct_type_to_struct_type"><td class="DESC">Logic error</td><td class="DESC">Cast from non-struct type to struct type</td><td>src/notifications/notify-manager.c</td><td class="DESC">handle_notify</td><td class="Q">451</td><td class="Q">1</td><td><a href="report-145148.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-145148.html" -->
+</tr>
+<tr class="bt_logic_error_cast_from_non-struct_type_to_struct_type"><td class="DESC">Logic error</td><td class="DESC">Cast from non-struct type to struct type</td><td>tests/test-gtk-mount-manager.c</td><td class="DESC">test_phosh_gtk_mount_manager_show_processes</td><td class="Q">349</td><td class="Q">1</td><td><a href="report-1ad28d.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-1ad28d.html" -->
+</tr>
+<tr class="bt_logic_error_cast_from_non-struct_type_to_struct_type"><td class="DESC">Logic error</td><td class="DESC">Cast from non-struct type to struct type</td><td>src/gtk-list-models/gtkrbtree.c</td><td class="DESC">gtk_rb_tree_node_get_tree</td><td class="Q">613</td><td class="Q">1</td><td><a href="report-1dd5ce.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-1dd5ce.html" -->
+</tr>
+<tr class="bt_logic_error_cast_from_non-struct_type_to_struct_type"><td class="DESC">Logic error</td><td class="DESC">Cast from non-struct type to struct type</td><td>src/portal-access-manager.c</td><td class="DESC">handle_access_dialog</td><td class="Q">96</td><td class="Q">1</td><td><a href="report-215bf0.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-215bf0.html" -->
+</tr>
+<tr class="bt_logic_error_cast_from_non-struct_type_to_struct_type"><td class="DESC">Logic error</td><td class="DESC">Cast from non-struct type to struct type</td><td>src/gtk-list-models/gtkrbtree.c</td><td class="DESC">gtk_rb_tree_node_get_previous</td><td class="Q">566</td><td class="Q">1</td><td><a href="report-358117.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-358117.html" -->
+</tr>
+<tr class="bt_logic_error_cast_from_non-struct_type_to_struct_type"><td class="DESC">Logic error</td><td class="DESC">Cast from non-struct type to struct type</td><td>src/gtk-list-models/gtkrbtree.c</td><td class="DESC">gtk_rb_tree_node_get_left</td><td class="Q">590</td><td class="Q">1</td><td><a href="report-3a3f18.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-3a3f18.html" -->
+</tr>
+<tr class="bt_logic_error_cast_from_non-struct_type_to_struct_type"><td class="DESC">Logic error</td><td class="DESC">Cast from non-struct type to struct type</td><td>src/notifications/notify-manager.c</td><td class="DESC">handle_notify</td><td class="Q">454</td><td class="Q">1</td><td><a href="report-40a72f.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-40a72f.html" -->
+</tr>
+<tr class="bt_logic_error_cast_from_non-struct_type_to_struct_type"><td class="DESC">Logic error</td><td class="DESC">Cast from non-struct type to struct type</td><td>src/top-panel.c</td><td class="DESC">add_keybindings</td><td class="Q">396</td><td class="Q">1</td><td><a href="report-499bad.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-499bad.html" -->
+</tr>
+<tr class="bt_logic_error_cast_from_non-struct_type_to_struct_type"><td class="DESC">Logic error</td><td class="DESC">Cast from non-struct type to struct type</td><td>src/gtk-list-models/gtkrbtree.c</td><td class="DESC">gtk_rb_tree_remove</td><td class="Q">714</td><td class="Q">1</td><td><a href="report-5abb35.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-5abb35.html" -->
+</tr>
+<tr class="bt_logic_error_cast_from_non-struct_type_to_struct_type"><td class="DESC">Logic error</td><td class="DESC">Cast from non-struct type to struct type</td><td>src/gtk-list-models/gtkrbtree.c</td><td class="DESC">gtk_rb_tree_insert_after</td><td class="Q">682</td><td class="Q">1</td><td><a href="report-6793dd.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-6793dd.html" -->
+</tr>
+<tr class="bt_logic_error_cast_from_non-struct_type_to_struct_type"><td class="DESC">Logic error</td><td class="DESC">Cast from non-struct type to struct type</td><td>src/notifications/notify-manager.c</td><td class="DESC">handle_notify</td><td class="Q">448</td><td class="Q">1</td><td><a href="report-765709.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-765709.html" -->
+</tr>
+<tr class="bt_logic_error_cast_from_non-struct_type_to_struct_type"><td class="DESC">Logic error</td><td class="DESC">Cast from non-struct type to struct type</td><td>src/portal-access-manager.c</td><td class="DESC">handle_access_dialog</td><td class="Q">113</td><td class="Q">1</td><td><a href="report-8b7661.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-8b7661.html" -->
+</tr>
+<tr class="bt_logic_error_cast_from_non-struct_type_to_struct_type"><td class="DESC">Logic error</td><td class="DESC">Cast from non-struct type to struct type</td><td>src/gtk-mount-prompt.c</td><td class="DESC">phosh_gtk_mount_prompt_class_init</td><td class="Q">439</td><td class="Q">1</td><td><a href="report-8bddaf.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-8bddaf.html" -->
+</tr>
+<tr class="bt_logic_error_cast_from_non-struct_type_to_struct_type"><td class="DESC">Logic error</td><td class="DESC">Cast from non-struct type to struct type</td><td>src/gtk-list-models/gtkrbtree.c</td><td class="DESC">gtk_rb_tree_node_get_parent</td><td class="Q">584</td><td class="Q">1</td><td><a href="report-941894.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-941894.html" -->
+</tr>
+<tr class="bt_logic_error_cast_from_non-struct_type_to_struct_type"><td class="DESC">Logic error</td><td class="DESC">Cast from non-struct type to struct type</td><td>src/run-command-manager.c</td><td class="DESC">add_keybindings</td><td class="Q">137</td><td class="Q">1</td><td><a href="report-95980b.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-95980b.html" -->
+</tr>
+<tr class="bt_logic_error_cast_from_non-struct_type_to_struct_type"><td class="DESC">Logic error</td><td class="DESC">Cast from non-struct type to struct type</td><td>src/notifications/notify-manager.c</td><td class="DESC">handle_notify</td><td class="Q">428</td><td class="Q">1</td><td><a href="report-b1325e.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-b1325e.html" -->
+</tr>
+<tr class="bt_logic_error_cast_from_non-struct_type_to_struct_type"><td class="DESC">Logic error</td><td class="DESC">Cast from non-struct type to struct type</td><td>src/settings/brightness.c</td><td class="DESC">brightness_changed_cb</td><td class="Q">29</td><td class="Q">1</td><td><a href="report-b45b44.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-b45b44.html" -->
+</tr>
+<tr class="bt_logic_error_cast_from_non-struct_type_to_struct_type"><td class="DESC">Logic error</td><td class="DESC">Cast from non-struct type to struct type</td><td>src/notifications/notify-manager.c</td><td class="DESC">handle_notify</td><td class="Q">438</td><td class="Q">1</td><td><a href="report-c116e4.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-c116e4.html" -->
+</tr>
+<tr class="bt_logic_error_cast_from_non-struct_type_to_struct_type"><td class="DESC">Logic error</td><td class="DESC">Cast from non-struct type to struct type</td><td>src/gtk-list-models/gtkrbtree.c</td><td class="DESC">gtk_rb_tree_node_mark_dirty</td><td class="Q">619</td><td class="Q">1</td><td><a href="report-d79a3c.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-d79a3c.html" -->
+</tr>
+<tr class="bt_logic_error_cast_from_non-struct_type_to_struct_type"><td class="DESC">Logic error</td><td class="DESC">Cast from non-struct type to struct type</td><td>src/gtk-list-models/gtkrbtree.c</td><td class="DESC">gtk_rb_tree_get_augment</td><td class="Q">603</td><td class="Q">1</td><td><a href="report-dd68a3.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-dd68a3.html" -->
+</tr>
+<tr class="bt_logic_error_cast_from_non-struct_type_to_struct_type"><td class="DESC">Logic error</td><td class="DESC">Cast from non-struct type to struct type</td><td>src/notifications/notify-manager.c</td><td class="DESC">handle_notify</td><td class="Q">445</td><td class="Q">1</td><td><a href="report-dd6ea7.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-dd6ea7.html" -->
+</tr>
+<tr class="bt_logic_error_cast_from_non-struct_type_to_struct_type"><td class="DESC">Logic error</td><td class="DESC">Cast from non-struct type to struct type</td><td>src/contrib/shell-network-agent.c</td><td class="DESC">get_secrets_keyring_cb</td><td class="Q">274</td><td class="Q">1</td><td><a href="report-ddb613.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-ddb613.html" -->
+</tr>
+<tr class="bt_logic_error_cast_from_non-struct_type_to_struct_type"><td class="DESC">Logic error</td><td class="DESC">Cast from non-struct type to struct type</td><td>src/home.c</td><td class="DESC">add_keybindings</td><td class="Q">348</td><td class="Q">1</td><td><a href="report-e09277.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-e09277.html" -->
+</tr>
+<tr class="bt_unused_code_dead_assignment"><td class="DESC">Unused code</td><td class="DESC">Dead assignment</td><td>src/main.c</td><td class="DESC">main</td><td class="Q">134</td><td class="Q">1</td><td><a href="report-210273.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-210273.html" -->
+</tr>
+<tr class="bt_unused_code_dead_assignment"><td class="DESC">Unused code</td><td class="DESC">Dead assignment</td><td>tests/testlib.c</td><td class="DESC">phoc_stdout_watch</td><td class="Q">74</td><td class="Q">1</td><td><a href="report-2bcd56.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-2bcd56.html" -->
+</tr>
+<tr class="bt_unused_code_dead_assignment"><td class="DESC">Unused code</td><td class="DESC">Dead assignment</td><td>tests/test-favourite-model.c</td><td class="DESC">test_phosh_favorite_list_model_remove</td><td class="Q">168</td><td class="Q">1</td><td><a href="report-550572.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-550572.html" -->
+</tr>
+<tr class="bt_unused_code_dead_assignment"><td class="DESC">Unused code</td><td class="DESC">Dead assignment</td><td>tests/test-favourite-model.c</td><td class="DESC">test_phosh_favorite_list_model_add</td><td class="Q">103</td><td class="Q">1</td><td><a href="report-9af5e0.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-9af5e0.html" -->
+</tr>
+<tr class="bt_unused_code_dead_assignment"><td class="DESC">Unused code</td><td class="DESC">Dead assignment</td><td>tests/test-status-icon.c</td><td class="DESC">test_phosh_status_icon_extra_widget</td><td class="Q">86</td><td class="Q">1</td><td><a href="report-ab48e4.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-ab48e4.html" -->
+</tr>
+<tr class="bt_logic_error_dereference_of_null_pointer"><td class="DESC">Logic error</td><td class="DESC">Dereference of null pointer</td><td>src/gtk-list-models/gtkrbtree.c</td><td class="DESC">gtk_rb_node_get_previous</td><td class="Q">205</td><td class="Q">5</td><td><a href="report-3c8834.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-3c8834.html" -->
+</tr>
+<tr class="bt_logic_error_dereference_of_null_pointer"><td class="DESC">Logic error</td><td class="DESC">Dereference of null pointer</td><td>src/gtk-list-models/gtkrbtree.c</td><td class="DESC">is_root</td><td class="Q">69</td><td class="Q">7</td><td><a href="report-6c5d65.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-6c5d65.html" -->
+</tr>
+<tr class="bt_logic_error_dereference_of_null_pointer"><td class="DESC">Logic error</td><td class="DESC">Dereference of null pointer</td><td>src/gtk-list-models/gtkrbtree.c</td><td class="DESC">gtk_rb_node_mark_dirty</td><td class="Q">157</td><td class="Q">5</td><td><a href="report-7aecff.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-7aecff.html" -->
+</tr>
+<tr class="bt_logic_error_dereference_of_null_pointer"><td class="DESC">Logic error</td><td class="DESC">Dereference of null pointer</td><td>src/gtk-list-models/gtkrbtree.c</td><td class="DESC">gtk_rb_tree_node_get_left</td><td class="Q">590</td><td class="Q">3</td><td><a href="report-935146.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-935146.html" -->
+</tr>
+<tr class="bt_logic_error_dereference_of_null_pointer"><td class="DESC">Logic error</td><td class="DESC">Dereference of null pointer</td><td>src/gtk-list-models/gtkrbtree.c</td><td class="DESC">gtk_rb_tree_node_get_right</td><td class="Q">596</td><td class="Q">3</td><td><a href="report-abdc36.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-abdc36.html" -->
+</tr>
+<tr class="bt_logic_error_dereference_of_null_pointer"><td class="DESC">Logic error</td><td class="DESC">Dereference of null pointer</td><td>src/gtk-list-models/gtkrbtree.c</td><td class="DESC">gtk_rb_node_get_next</td><td class="Q">224</td><td class="Q">5</td><td><a href="report-d4aa02.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-d4aa02.html" -->
+</tr>
+<tr class="bt_logic_error_dereference_of_null_pointer"><td class="DESC">Logic error</td><td class="DESC">Dereference of null pointer</td><td>src/gtk-list-models/gtkrbtree.c</td><td class="DESC">gtk_rb_tree_remove_node_fixup</td><td class="Q">444</td><td class="Q">46</td><td><a href="report-f6e534.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-f6e534.html" -->
+</tr>
+<tr class="bt_memory_error_memory_leak"><td class="DESC">Memory error</td><td class="DESC">Memory leak</td><td>src/favorite-list-model.c</td><td class="DESC">phosh_favorite_list_model_remove_app</td><td class="Q">294</td><td class="Q">20</td><td><a href="report-79261c.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-79261c.html" -->
+</tr>
+<tr class="bt_memory_error_memory_leak"><td class="DESC">Memory error</td><td class="DESC">Memory leak</td><td>src/favorite-list-model.c</td><td class="DESC">phosh_favorite_list_model_add_app</td><td class="Q">239</td><td class="Q">21</td><td><a href="report-a7386d.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-a7386d.html" -->
+</tr>
+<tr class="bt_logic_error_out-of-bound_access"><td class="DESC">Logic error</td><td class="DESC">Out-of-bound access</td><td>src/screenshot-manager.c</td><td class="DESC">build_screenshot_filename</td><td class="Q">351</td><td class="Q">31</td><td><a href="report-f6d72f.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-f6d72f.html" -->
+</tr>
+<tr class="bt_unused_code_unreachable_code"><td class="DESC">Unused code</td><td class="DESC">Unreachable code</td><td>src/idle-manager.c</td><td class="DESC">handle_add_user_active_watch</td><td class="Q">278</td><td class="Q">1</td><td><a href="report-5cfd4c.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-5cfd4c.html" -->
+</tr>
+<tr class="bt_unused_code_unreachable_code"><td class="DESC">Unused code</td><td class="DESC">Unreachable code</td><td>src/idle-manager.c</td><td class="DESC">handle_add_idle_watch</td><td class="Q">254</td><td class="Q">1</td><td><a href="report-bdd098.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-bdd098.html" -->
+</tr>
+<tr class="bt_unused_code_unreachable_code"><td class="DESC">Unused code</td><td class="DESC">Unreachable code</td><td>src/app-tracker.c</td><td class="DESC">on_app_launched</td><td class="Q">341</td><td class="Q">1</td><td><a href="report-cec584.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-cec584.html" -->
+</tr>
+<tr class="bt_unused_code_unreachable_code"><td class="DESC">Unused code</td><td class="DESC">Unreachable code</td><td>tests/test-idle-manager.c</td><td class="DESC">timeout_cb</td><td class="Q">123</td><td class="Q">1</td><td><a href="report-e2d928.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-e2d928.html" -->
+</tr>
+</tbody>
+</table>
+
+</body></html>

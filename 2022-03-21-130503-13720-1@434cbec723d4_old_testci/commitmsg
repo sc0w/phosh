@@ -1,0 +1,13 @@
+update ci
+
+ci test
+
+test
+
+test
+
+newtest
+
+ci: enable gtk-doc
+
+ci: add gtk-doc-tools

@@ -1,0 +1,4 @@
+app-auth-prompt: Drop unused code
+
+add_choice_to_gvariant looks at the switch state not at data
+we store on the GObject so this code can go.
